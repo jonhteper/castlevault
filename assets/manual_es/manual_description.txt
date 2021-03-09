@@ -1,0 +1,6 @@
+MANUAL PARA CASTLEVAULT
+
+Castlevault es una bóveda de contraseñas por línea de comandos. Esta herramienta ha sido creada
+para guardar credenciales de servicios de desarrollo, por ejemplo bases de datos o acceso por ssh.
+
+Castlevault crea archivos cifrados que pueden ser abiertos por una clave de 32 bits.

@@ -1,0 +1,48 @@
+COMANDOS PARA CASTLEVAULT
+
+Comandos:
+    * create
+    * get
+    * add
+
+Create:
+    Crear un archivo cifrado donde podrás guardar contraseñas.
+    Sintaxis: castlevault create <archivo cifrado>
+    Salida:
+        passphrase(32 char): <-- Escribe tu clave de cifrado
+    En esta versión, solo puedes usar una clave de 32 bits.
+    Seguidamente puedes agregar tu primera contraseña.
+
+    Ejemplo:
+        $ castlevault create .credentials
+        passphrase(32 char):
+
+        Add your first password
+        Label: email
+        Password:
+
+Get:
+    Obtener una contraseña descrifrada por su nombre
+    Sintaxis: castlevault get <archivo cifrado> <nombre de la contraseña>
+    Salida:
+        passphrase: <-- Escribe tu clave de cifrado
+        decipherPassword
+    Ejemplo:
+        $ castlevault get .credentials email
+        passphrase:
+        01234567890
+
+Add:
+    Agregar una contraseña a un archivo cifrado
+    Sintaxis: castlevault add <archivo cifrado>
+    Salida:
+        passphrase: <-- Escribe tu clave de cifrado
+        Label: <etiqueta o id de la contraseña>
+        Password: <-- escribe tu contraseña
+    Ejemplo:
+        $ castlevault add .credentials
+        passphrase:
+        Add a new password.
+        Label: email2
+        Password:
+        Password saved

@@ -1,0 +1,48 @@
+COMMANDS FOR CASTLEVAULT
+
+Commands:
+    * create
+    * get
+    * add
+
+Create:
+    Create a cipher file where you can save your passwords.
+    Syntax: castlevault create <cipher file>
+    Output:
+        passphrase(32 char): <-- Write your cipher key
+    In this version, you only can write a 32 bits key.
+    Next, you can add your first password.
+
+    Example:
+        $ castlevault create .credentials
+        passphrase(32 char):
+
+        Add your first password
+        Label: email
+        Password:
+
+Get:
+    Get a decipher password by name
+    Syntax: castlevault get <cipher file> <name of password>
+    Output:
+        passphrase: <-- Write your cipher key
+        decipherPassword
+    Example:
+        $ castlevault get .credentials email
+        passphrase:
+        01234567890
+
+Add:
+    Add a password to specific cipher file
+    Syntax: castlevault add <cipher file>
+    Output:
+        passphrase: <-- Write your cipher key
+        Label: <label or id for password>
+        Password: <-- Write your password
+    Example:
+        $ castlevault add .credentials
+        passphrase:
+        Add a new password.
+        Label: email2
+        Password:
+        Password saved

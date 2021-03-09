@@ -6,16 +6,42 @@ import (
 	"github.com/howeyc/gopass"
 	"github.com/jonhteper/castlevault/internal"
 	"log"
+	"os"
+	"path"
 )
 
 const (
-	create = "create"
-	get    = "get"
-	add    = "add"
+	createCommand   = "create"
+	getCommand      = "get"
+	addCommand      = "add"
+	manCommand      = "man"
+	commandFile     = "manual_commands.txt"
+	descriptionFile = "manual_description.txt"
 )
 
 func printManual() {
-	fmt.Println("docs in progress...") // TODO create manual
+	binDir, err := os.Executable()
+	handleErr(err)
+	manPath := path.Join(path.Dir(binDir), "manual")
+
+	dataDescription, err := os.ReadFile(path.Join(manPath, descriptionFile))
+	handleErr(err)
+
+	dataCommands, err := os.ReadFile(path.Join(manPath, commandFile))
+	handleErr(err)
+
+	fmt.Printf("%v\n%v", string(dataDescription), string(dataCommands))
+}
+
+func printCommandManual() {
+	binDir, err := os.Executable()
+	handleErr(err)
+	manPath := path.Join(path.Dir(binDir), "manual")
+
+	data, err := os.ReadFile(path.Join(manPath, commandFile))
+	handleErr(err)
+
+	fmt.Println(string(data))
 }
 
 func handleErr(err error) {
@@ -28,16 +54,15 @@ func main() {
 	flag.Parse()
 	args := flag.Args()
 
-	if len(args) < 2 {
-		fmt.Println("Error: not enough args")
-		printManual()
-		return
-	}
-
 	switch args[0] {
-	case create:
+	case createCommand:
+		if len(args) < 2 {
+			fmt.Println("Error: not enough args")
+			printCommandManual()
+			return
+		}
+
 		fmt.Print("passphrase(32 char):")
-		//byteKey, err := terminal.ReadPassword(syscall.Stdin)
 		byteKey, err := gopass.GetPasswd()
 		handleErr(err)
 
@@ -50,10 +75,10 @@ func main() {
 		handleErr(err)
 
 		fmt.Println("Password vault created successfully")
-	case get:
+	case getCommand:
 		if len(args) < 3 {
 			fmt.Println("Error: not enough args")
-			printManual()
+			printCommandManual()
 			return
 		}
 
@@ -70,7 +95,12 @@ func main() {
 		handleErr(err)
 
 		fmt.Printf("\n%v\n", pass.Password)
-	case add:
+	case addCommand:
+		if len(args) < 2 {
+			fmt.Println("Error: not enough args")
+			printCommandManual()
+			return
+		}
 		fmt.Print("passphrase: ")
 		byteKey, err := gopass.GetPasswd()
 		handleErr(err)
@@ -87,10 +117,11 @@ func main() {
 		err = vault.Add(pass)
 		handleErr(err)
 		fmt.Println("Password saved")
+	case manCommand:
+		printManual()
 	default:
 		fmt.Println("Error: not correct args")
-		printManual()
+		printCommandManual()
 		return
 	}
-
 }

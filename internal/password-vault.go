@@ -6,9 +6,8 @@ import (
 	"os"
 )
 
-const dbPermission = 0755
+const dbPermission = 0640
 
-// TODO check permissions
 type Password struct {
 	Name     string `json:"name"`
 	Password string `json:"password"`
